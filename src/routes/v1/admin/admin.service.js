@@ -14,13 +14,23 @@ const getByEmail = async (email) => {
         where: { email: email, is_active: 1 }
     },
     );
-    if (!user) throw new ApiError(httpStatus.UNAUTHORIZED, "Incorrect email");
+    if (!user) {
+        //  throw new ApiError(httpStatus.UNAUTHORIZED, "Incorrect email");
+        // // console.log("gui");
+        return {
+            status: 400,
+            message:"Incorrect email"
+        }
+    }
+       
     return user.dataValues;
 };
 
 const checkPassword = async (actualPassword, payloadPassword) => {
+    console.log(actualPassword),
+        console.log(payloadPassword);
     const isCorrectPassword = await bcrypt.compare(
-        actualPassword,payloadPassword
+        payloadPassword,actualPassword
         
     );
     return isCorrectPassword;
@@ -29,14 +39,24 @@ const checkPassword = async (actualPassword, payloadPassword) => {
 const loginUserWithEmailAndPassword = async (req) => {
     const user = await getByEmail(req.body.email);
     if (!user.is_email_verified) {
-        throw new ApiError(httpStatus.UNAUTHORIZED, "Email ID not verified");
+        // throw new ApiError(httpStatus.UNAUTHORIZED, "Email ID not verified");
+        console.log("hello")
+        return {
+            status: 400,
+            message: "Email ID not verified"
+        }
     }
     // console.log(user.password)
-
-    // if (user && !(await checkPassword(user.password, req.body.password))) {
-    //     throw new ApiError(httpStatus.UNAUTHORIZED, "Incorrect password");
-    // }
-    // delete user.password;
+    console.log(user);
+    if (user && !(await checkPassword(user.password, req.body.password))) {
+        // return ("Incorrect")
+        // throw new ApiError(httpStatus.UNAUTHORIZED, "Incorrect password");
+        return {
+            status: 400,
+            message: "Incorrect password"
+        }
+    }
+    delete user.password;
     // console.log(user);
     return user;
  

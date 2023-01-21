@@ -37,6 +37,14 @@ const userDetails = {
     }),
 };
 
+const getUserDetails = {
+    query: Joi.object().keys({
+        user_id: Joi.string().required(),
+    }),
+};
+
+
 module.exports = {
-    userDetails
+    userDetails,
+    getUserDetails
 }

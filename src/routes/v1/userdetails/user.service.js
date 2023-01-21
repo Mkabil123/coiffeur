@@ -7,6 +7,7 @@ const User = db.user;
 const familyDetails = db.userDetails
 const ApiError = require("../../../utlis/Apierror");
 const { sequelize, user, userAddress } = require("../../../models");
+const { now } = require("moment");
 
 const userDetails = async (req) => {
     try {
@@ -17,11 +18,11 @@ const userDetails = async (req) => {
                 },
             }
         );
-        if(Usercheck){
+        if (Usercheck) {
             throw new ApiError(
-                httpStatus.BAD_REQUEST,
-                "User has already created"
-            );  
+                httpStatus.INTERNAL_SERVER_ERROR,
+                "The user data has been entered only edit is alone available"
+            );
         }
         let route = {};
         const userDetails = {
@@ -39,7 +40,7 @@ const userDetails = async (req) => {
             pan_number: req.body.pan_number,
             school_college_name: req.body.school_college_name,
             shop_license_number: req.body.shop_license_number,
-            aadhar_document: req.body.aadhar_document,
+            aadhar_document: req.body.aadhar_document
         };
         route.route_details = await User.create(userDetails);
         if (route.route_details) {
@@ -59,7 +60,7 @@ const userDetails = async (req) => {
                     pan_number: item.pan_number,
                     school_college_name: item.school_college_name,
                     shop_license_number: item.shop_license_number,
-                    aadhar_document: item.aadhar_document,
+                    aadhar_document: item.aadhar_document
                 });
                 if (!routeStops) {
                     throw new ApiError(
@@ -83,8 +84,33 @@ const userDetails = async (req) => {
     }
 };
 
+const getUserDetails = async (req) => {
+    console.log(req.query.user_id);
+    const Usercheck = await User.findAll(
+        {
+            where: {
+                user_id: req.query.user_id,
+            },
+        }
+    );
+    console.log(Usercheck);
+    const user = await User.findOne({
+        where: { user_id: req.query.user_id },
+        include: [
+            {
+                model: familyDetails,
+                where: { parentdetails_id: { [Op.eq]: `${req.query.user_id}` } },
+            },
+        ],
+        // order: [[familyDetails, "updatedAt", "DESC"]],
+    })
+    console.log(user);
+    return user
+}
+
 
 
 module.exports = {
-    userDetails
+    userDetails,
+    getUserDetails
 }

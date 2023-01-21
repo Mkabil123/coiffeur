@@ -68,6 +68,11 @@ module.exports = (sequelize, Sequelize) => {
                 type: Sequelize.STRING(80),
                 allowNull: true,
             },
+            status: {
+                type: Sequelize.BOOLEAN,
+                allowNull: false,
+                defaultValue: false,
+            },
         },
       
     );

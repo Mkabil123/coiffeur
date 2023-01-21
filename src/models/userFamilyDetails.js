@@ -63,7 +63,12 @@ module.exports = (sequelize, Sequelize) => {
             aadhar_document: {
                 type: Sequelize.STRING(800),
                 allowNull:true
-            }
+            },
+            status: {
+                type: Sequelize.BOOLEAN,
+                allowNull: false,
+                defaultValue: false,
+            },
         }
     )
     return userfamilydetails

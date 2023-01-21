@@ -8,7 +8,14 @@ const userDetails = catchAsync(async (req, res) => {
     res.status(httpStatus.OK).send(response);
 });
 
+const getUserDetails = catchAsync(async (req, res) => {
+    console.log("111");
+    const response = await userService.getUserDetails(req);
+    res.status(httpStatus.OK).send(response);
+});
+
 
 module.exports = {
-    userDetails
+    userDetails,
+    getUserDetails
 }

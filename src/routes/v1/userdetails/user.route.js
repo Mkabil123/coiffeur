@@ -5,6 +5,7 @@ const userController=require("./user.controller")
 
 const router = express.Router();
 
-router.post("/userdetails",validate(userValidation.userDetails),userController.userDetails)
+router.post("/userdetails", validate(userValidation.userDetails), userController.userDetails)
+router.get("/userdetailsbyid", validate(userValidation.getUserDetails), userController.getUserDetails)
 
 module.exports = router;

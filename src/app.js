@@ -7,7 +7,7 @@ const passport = require('passport');
 const httpStatus = require('http-status');
 const routes = require('./routes');
 const { jwtStrategy } = require('./config/passport');
-
+const { errorConverter, errorHandler } = require('./middlewares/error');
 const app = express();
 
 
@@ -42,4 +42,11 @@ app.use((req, res, next) => {
     next(new ApiError(httpStatus.NOT_FOUND, 'Not found'));
 });
 
+
+
+// convert error to ApiError, if needed
+app.use(errorConverter);
+
+// handle error
+app.use(errorHandler);
 module.exports = app;

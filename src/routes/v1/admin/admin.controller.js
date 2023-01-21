@@ -4,10 +4,21 @@ const adminService = require("./admin.service");
 
 const adminLogin = catchAsync(async (req, res) => {
     const response = await adminService.loginUserWithEmailAndPassword(req);
-    console.log(response,"hjfdbdfj");
     res.status(httpStatus.OK).send(response);
 });
 
+const signup = catchAsync(async (req, res) => {
+    const response = await adminService.signup(req.body);
+    res.status(httpStatus.OK).send(response);
+});
+
+const verifyCode = catchAsync(async (req, res) => {
+    const response = await adminService.verifyCode(req.query);
+    res.status(httpStatus.OK).send({ response });
+});
+
 module.exports = {
-    adminLogin
+    adminLogin,
+    signup,
+    verifyCode
 }

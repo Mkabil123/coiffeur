@@ -1,12 +1,17 @@
 const express = require("express");
-const adminroute=require("./v1/admin/admin.route")
+const loginroute = require("./v1/admin/admin.route")
+const userrroute=require("./v1/userdetails/user.route")
 
 
 const router = express.Router();
 const defaultRoutes = [
     {
         path: "/v1/auth",
-        route: adminroute,
+        route: loginroute,
+    },
+    {
+        path: "/v1/user",
+        route: userrroute,
     }
 ];
 

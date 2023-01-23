@@ -14,8 +14,25 @@ const getUserDetails = catchAsync(async (req, res) => {
     res.status(httpStatus.OK).send(response);
 });
 
+const getAllUser = catchAsync(async (req, res) => {
+    const response = await userService.adminUserList(req);
+    res.status(httpStatus.OK).send(response);
+});
+
+const approveUser = catchAsync(async (req, res) => {
+    const response = await userService.approveUser(req);
+    res.status(httpStatus.OK).send(response);
+});
+
+const gettingAlluser = catchAsync(async (req, res) => {
+    const response = await userService.gettingAlluser(req);
+    res.status(httpStatus.OK).send(response);
+});
 
 module.exports = {
     userDetails,
-    getUserDetails
+    getUserDetails,
+    getAllUser,
+    approveUser,
+    gettingAlluser
 }

@@ -64,11 +64,11 @@ module.exports = (sequelize, Sequelize) => {
                 type: Sequelize.STRING(800),
                 allowNull:true
             },
-            status: {
-                type: Sequelize.BOOLEAN,
-                allowNull: false,
-                defaultValue: false,
+            shop_license_number: {
+                type: Sequelize.STRING(30),
+                allowNull: true
             },
+            
         }
     )
     return userfamilydetails

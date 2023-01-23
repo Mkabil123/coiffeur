@@ -26,6 +26,7 @@ const userDetails = {
         district: Joi.string().required(),
         currentlivingspace: Joi.string().required(),
         address: Joi.string().required(),
+        shop_license_number: Joi.string().optional().allow("", null),
         // start_time: Joi.string().required(),
         phone_number: Joi.string().required(),
         educational_qualification: Joi.string().required(),
@@ -43,8 +44,18 @@ const getUserDetails = {
     }),
 };
 
+const approveUser = {
+    query: Joi.object().keys({
+        user_id: Joi.string().required(),
+        status: Joi.string()
+            .required()
+            .valid("Accept", "Decline"),
+    }),
+};
+
 
 module.exports = {
     userDetails,
-    getUserDetails
+    getUserDetails,
+    approveUser
 }

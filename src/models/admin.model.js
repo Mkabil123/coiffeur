@@ -57,6 +57,11 @@ module.exports = (sequelize, Sequelize) => {
                 defaultValue: true,
 
             },
+            status: {
+                type: Sequelize.BOOLEAN,
+                allowNull: false,
+                defaultValue: false,
+            },
             createdAt: {
                 type: "DateTime",
                 default_value: Sequelize.literal("CURRENT_TIMESTAMP"),

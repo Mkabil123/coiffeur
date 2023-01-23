@@ -10,6 +10,7 @@ db.userDetails=require("./userFamilyDetails")(sequelize,Sequelize)
 
 
 db.user.hasMany(db.userDetails, {
+    sourceKey: "userdetails_id",
     foreignKey: "parentdetails_id"
 });
 

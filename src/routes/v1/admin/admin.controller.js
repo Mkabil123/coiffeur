@@ -17,8 +17,20 @@ const verifyCode = catchAsync(async (req, res) => {
     res.status(httpStatus.OK).send({ response });
 });
 
+const addBlob = catchAsync(async (req, res) => {
+    const response = await adminService.addBlob(req);
+    res.status(httpStatus.OK).send(response);
+});
+
+const editBlob = catchAsync(async (req, res) => {
+    const response = await adminService.editBlob(req);
+    res.status(httpStatus.OK).send(response);
+});
+
 module.exports = {
     adminLogin,
     signup,
-    verifyCode
+    verifyCode,
+    addBlob,
+    editBlob
 }

@@ -37,8 +37,29 @@ const verifyCode = {
     }),
 };
 
+const addBlob = {
+    body: Joi.object().keys({
+        user_id: Joi.string().required(),
+        detailscontent: Joi.string().required(),
+        image: Joi.string().optional().allow("", null),
+        video: Joi.string().optional().allow("", null),
+    }),
+};
+
+const editBlob = {
+    body: Joi.object().keys({
+        user_id: Joi.string().required(),
+        detailscontent: Joi.string().required(),
+        image: Joi.string().optional().allow("", null), 
+        video: Joi.string().optional().allow("", null), 
+        id: Joi.string().required()
+    }),
+};
+
 module.exports = {
     adminlogin,
     signup,
-    verifyCode
+    verifyCode,
+    addBlob,
+    editBlob
 }

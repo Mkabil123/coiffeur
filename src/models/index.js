@@ -6,7 +6,8 @@ db.Sequelize = Sequelize;
 
 db.admin = require("./admin.model")(sequelize, Sequelize)
 db.user = require('./user.model')(sequelize, Sequelize)
-db.userDetails=require("./userFamilyDetails")(sequelize,Sequelize)
+db.userDetails = require("./userFamilyDetails")(sequelize, Sequelize)
+db.blobdetails=require("./details.model")(sequelize,Sequelize)
 
 
 db.user.hasMany(db.userDetails, {

@@ -9,6 +9,7 @@ const ApiError = require("../../../utlis/Apierror");
 const { sequelize, user, userAddress } = require("../../../models");
 const bcrypt = require("bcryptjs");
 const { sendWelcomeMail } = require("../../../services/email.service");
+const blobdetails=db.blobdetails
 
 const generateVerificationCode = (
     length = 6,
@@ -127,8 +128,62 @@ const verifyCode = async (req) => {
 };
 
 
+const addBlob = async (req) => {
+    try {
+       const details= await blobdetails.create({
+            user_id: req.body.user_id,
+            detailscontent: req.body.detailscontent,
+            image: req.body.image,
+            video:req.body.video
+       });
+        if (!details) {
+            throw new ApiError(httpStatus.BAD_REQUEST,"Please enter details properly")
+        }
+        return {
+            status: "success",
+            message:"Details created successfully"
+        }
+    } catch (e) {
+        return { status: "failed", message: "Something went wrong. Please contact admin. " + e };
+    }
+}
+
+
+const editBlob = async (req) => {
+    try {
+        const detailscheck = await blobdetails.findOne({
+            where:{details_id:req.body.id}
+        })
+        if (!detailscheck) {
+            throw new ApiError(httpStatus.BAD_REQUEST, "please enter id properly")
+        }
+        const details = await blobdetails.update({
+            user_id: req.body.user_id,
+            detailscontent: req.body.detailscontent,
+            image: req.body.image,
+            video: req.body.video
+        },
+            {
+                where: {
+                    details_id:  id ,
+                },
+            });
+        if (!details) {
+            throw new ApiError(httpStatus.BAD_REQUEST, "Please enter details properly")
+        }
+        return {
+            status: "success",
+            message: "Details updated successfully"
+        }
+    } catch (e) {
+        return { status: "failed", message: "Something went wrong. Please contact admin. " + e };
+    }
+}
+
 module.exports = {
     loginUserWithEmailAndPassword,
     signup,
-    verifyCode
+    verifyCode,
+    addBlob,
+    editBlob
 }
